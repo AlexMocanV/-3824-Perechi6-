@@ -1,0 +1,57 @@
+#include <fstream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+using ui=unsigned int;
+
+ifstream cin("perechi6.in");
+ofstream cout("perechi6.out");
+
+vector<int>x;
+vector<int>y;
+
+unordered_map<int,int>mpx;
+unordered_map<int,int>mpy;
+unordered_map<int,bool>aparitie;
+
+int main()
+{
+    ui n,m;
+    cin>>n;
+    x.resize(n);
+    for(ui i=0;i<n;i++)
+    {
+      cin>>x[i];
+      aparitie[x[i]]=true;
+      if(mpx.find(x[i])!= mpx.end()){
+        mpx[x[i]]++;
+      }
+      else{
+        mpx[x[i]]=1;
+      }
+    }
+    cin>>m;
+    y.resize(m);
+    for(ui i=0;i<m;i++)
+    {
+      cin>>y[i];
+      if(mpy.find(y[i])!= mpy.end()){
+        mpy[y[i]]++;
+      }
+      else{
+        mpy[y[i]]=1;
+      }
+    }
+    long long perechi=0;
+    for(ui i=0;i<n;i++)
+    {
+      if(mpy.find(x[i])!=mpy.end()&&aparitie[x[i]]==true)
+      {
+        perechi+=1LL*mpx[x[i]]*mpy[x[i]];
+        aparitie[x[i]]=false;
+      }
+    }
+    cout<<perechi;
+    return 0;
+}
